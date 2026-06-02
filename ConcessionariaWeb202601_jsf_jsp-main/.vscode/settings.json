@@ -1,0 +1,6 @@
+{
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "web/web/WEB-INF/lib/postgresql-42.7.3.jar"
+    ]
+}
