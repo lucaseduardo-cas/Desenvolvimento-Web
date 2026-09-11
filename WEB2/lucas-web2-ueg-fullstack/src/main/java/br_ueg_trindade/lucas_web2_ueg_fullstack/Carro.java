@@ -1,15 +1,24 @@
 package br_ueg_trindade.lucas_web2_ueg_fullstack;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
+@Entity
 public class Carro {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     private String modelo;
     private String marca;
     private Integer ano;
 
     public Carro() {}
 
-    public Carro(Long id, String modelo, String marca, Integer ano) {
-        this.id = id;
+    public Carro(String modelo, String marca, Integer ano) {
         this.modelo = modelo;
         this.marca = marca;
         this.ano = ano;

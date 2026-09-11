@@ -1,21 +1,31 @@
 package br_ueg_trindade.lucas_web2_ueg_fullstack;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/permissoes")
 public class PermissaoController {
 
+    private final PermissaoRepository permissaoRepository;
+
+    public PermissaoController(PermissaoRepository permissaoRepository) {
+        this.permissaoRepository = permissaoRepository;
+    }
+
     @GetMapping
     public List<Permissao> getAllPermissoes() {
-        List<Permissao> permissoes = new ArrayList<>();
-        permissoes.add(new Permissao(1L, "ROLE_ADMIN", "Acesso total ao sistema"));
-        permissoes.add(new Permissao(2L, "ROLE_USER", "Acesso restrito a consultas"));
-        return permissoes;
+        return permissaoRepository.findAll();
+    }
+
+    @PostMapping
+    public Permissao createPermissao(@RequestBody Permissao permissao) {
+        return permissaoRepository.save(permissao);
+    }
+
+    @GetMapping("/{id}")
+    public Permissao getPermissaoById(@PathVariable Long id) {
+        return permissaoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Permissão não encontrada"));
     }
 }

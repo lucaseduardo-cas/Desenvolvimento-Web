@@ -1,21 +1,31 @@
 package br_ueg_trindade.lucas_web2_ueg_fullstack;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.ArrayList;
+import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 @RequestMapping("/carros")
 public class CarroController {
 
+    private final CarroRepository carroRepository;
+
+    public CarroController(CarroRepository carroRepository) {
+        this.carroRepository = carroRepository;
+    }
+
     @GetMapping
     public List<Carro> getAllCarros() {
-        List<Carro> carros = new ArrayList<>();
-        carros.add(new Carro(1L, "Civic EX", "Honda", 2004));
-        carros.add(new Carro(2L, "Saveiro", "Volkswagen", 2016));
-        return carros;
+        return carroRepository.findAll();
+    }
+
+    @PostMapping
+    public Carro createCarro(@RequestBody Carro carro) {
+        return carroRepository.save(carro);
+    }
+
+    @GetMapping("/{id}")
+    public Carro getCarroById(@PathVariable Long id) {
+        return carroRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Carro não encontrado"));
     }
 }

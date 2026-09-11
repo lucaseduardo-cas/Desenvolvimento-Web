@@ -1,0 +1,6 @@
+2026-09-11 15:31:48.320841-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USUARIO CARRO [*]CARRO"; SQL statement:
+SELECT * FROM USUARIO CARRO CARRO [42000-240]
+2026-09-11 15:31:49.320325-03:00 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Syntax error in SQL statement "SELECT * FROM USUARIO CARRO [*]CARRO"; SQL statement:
+SELECT * FROM USUARIO CARRO CARRO [42000-240]
