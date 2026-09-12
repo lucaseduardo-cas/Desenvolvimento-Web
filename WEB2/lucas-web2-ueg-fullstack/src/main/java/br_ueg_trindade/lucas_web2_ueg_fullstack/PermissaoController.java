@@ -5,6 +5,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/permissoes")
+@CrossOrigin(origins = "http://localhost:5173")
 public class PermissaoController {
 
     private final PermissaoRepository permissaoRepository;

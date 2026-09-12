@@ -5,6 +5,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/carros")
+@CrossOrigin(origins = "http://localhost:5173")
 public class CarroController {
 
     private final CarroRepository carroRepository;
