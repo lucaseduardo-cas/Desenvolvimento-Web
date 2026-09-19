@@ -1,7 +1,7 @@
 package br_ueg_trindade.lucas_web2_ueg_fullstack;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -9,11 +9,8 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 public class UsuarioController {
 
-    private final UsuarioRepository usuarioRepository;
-
-    public UsuarioController(UsuarioRepository usuarioRepository) {
-        this.usuarioRepository = usuarioRepository;
-    }
+    @Autowired
+    private UsuarioRepository usuarioRepository;
 
     @GetMapping
     public List<Usuario> getAllUsuarios() {
@@ -25,10 +22,14 @@ public class UsuarioController {
         return usuarioRepository.save(usuario);
     }
 
-    @GetMapping("/{id}")
-    public Usuario getUsuarioById(@PathVariable Long id) {
-        return usuarioRepository.findById(id)
+    @PutMapping("/{id}")
+    public Usuario updateUsuario(@PathVariable Long id, @RequestBody Usuario usuarioAtualizado) {
+        Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Usuário não encontrado"));
+        usuario.setNome(usuarioAtualizado.getNome());
+        usuario.setUsername(usuarioAtualizado.getUsername());
+        usuario.setEmail(usuarioAtualizado.getEmail());
+        return usuarioRepository.save(usuario);
     }
 
     @DeleteMapping("/{id}")

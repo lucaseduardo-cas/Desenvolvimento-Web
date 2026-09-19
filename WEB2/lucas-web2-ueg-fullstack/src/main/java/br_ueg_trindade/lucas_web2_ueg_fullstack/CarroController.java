@@ -1,5 +1,6 @@
 package br_ueg_trindade.lucas_web2_ueg_fullstack;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -8,11 +9,8 @@ import java.util.List;
 @CrossOrigin(origins = "http://localhost:5173")
 public class CarroController {
 
-    private final CarroRepository carroRepository;
-
-    public CarroController(CarroRepository carroRepository) {
-        this.carroRepository = carroRepository;
-    }
+    @Autowired
+    private CarroRepository carroRepository;
 
     @GetMapping
     public List<Carro> getAllCarros() {
@@ -24,9 +22,19 @@ public class CarroController {
         return carroRepository.save(carro);
     }
 
-    @GetMapping("/{id}")
-    public Carro getCarroById(@PathVariable Long id) {
-        return carroRepository.findById(id)
+    @PutMapping("/{id}")
+    public Carro updateCarro(@PathVariable Long id, @RequestBody Carro dadosNovos) {
+        Carro carro = carroRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Carro não encontrado"));
+        carro.setMarca(dadosNovos.getMarca());
+        carro.setModelo(dadosNovos.getModelo());
+        carro.setAno(dadosNovos.getAno());
+        carro.setPlaca(dadosNovos.getPlaca());
+        return carroRepository.save(carro);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCarro(@PathVariable Long id) {
+        carroRepository.deleteById(id);
     }
 }

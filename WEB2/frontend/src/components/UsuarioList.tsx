@@ -1,41 +1,46 @@
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import type { Usuario } from "../types/Usuario";
+import UsuarioForm from "./UsuarioForm";
 
 export default function UsuarioList() {
   const [usuarios, setUsuarios] = useState<Usuario[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [erro, setErro] = useState<string | null>(null);
+  const [editando, setEditando] = useState<Usuario | null>(null);
+
+  function carregarUsuarios() {
+    api.get<Usuario[]>("/api/usuarios").then((res) => setUsuarios(res.data));
+  }
 
   useEffect(() => {
-    api.get<Usuario[]>("/api/usuarios")
-      .then((resposta) => {
-        setUsuarios(resposta.data);
-        setLoading(false);
-      })
-      .catch(() => {
-        setErro("Não foi possível carregar os usuários. Verifique se o backend está ligado.");
-        setLoading(false);
-      });
+    carregarUsuarios();
   }, []);
 
-  if (loading) return <p>Carregando usuários...</p>;
-  if (erro) return <p style={{ color: "red" }}>{erro}</p>;
+  async function excluir(id: number) {
+    await api.delete(`/api/usuarios/${id}`);
+    carregarUsuarios();
+  }
 
   return (
     <div>
-      <h2>Usuários Cadastrados</h2>
-      {usuarios.length === 0 ? (
-        <p>Nenhum usuário cadastrado.</p>
-      ) : (
-        <ul>
-          {usuarios.map((u) => (
-            <li key={u.id}>
-              <strong>{u.nome}</strong> ({u.username}) – {u.email}
-            </li>
-          ))}
-        </ul>
-      )}
+      <h2>Usuários (Colaboradores)</h2>
+      <UsuarioForm
+        key={editando?.id ?? "novo"}
+        usuarioEditando={editando}
+        onUsuarioSalvo={() => {
+          carregarUsuarios();
+          setEditando(null);
+        }}
+        onCancelar={() => setEditando(null)}
+      />
+      <ul>
+        {usuarios.map((u) => (
+          <li key={u.id} style={{ marginBottom: "6px" }}>
+            <strong>{u.nome}</strong> ({u.username}) – {u.email}{" "}
+            <button onClick={() => setEditando(u)}>Editar</button>{" "}
+            <button onClick={() => excluir(u.id)}>Excluir</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
