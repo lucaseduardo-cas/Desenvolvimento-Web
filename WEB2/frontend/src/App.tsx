@@ -1,17 +1,17 @@
-import UsuarioList from "./components/UsuarioList";
-import PermissaoList from "./components/PermissaoList";
-import CarroList from "./components/CarroList";
+import CarrosPage from "./pages/CarrosPage";
+import UsuariosPage from "./pages/UsuariosPage";
+import PermissoesPage from "./pages/PermissoesPage";
 
 export default function App() {
   return (
     <main style={{ padding: "24px", fontFamily: "sans-serif" }}>
       <h1>Painel Oficina - Programação Web II</h1>
       <hr />
-      <UsuarioList />
+      <CarrosPage />
       <hr />
-      <PermissaoList />
+      <UsuariosPage />
       <hr />
-      <CarroList />
+      <PermissoesPage />
     </main>
   );
 }
