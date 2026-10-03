@@ -1,10 +1,12 @@
 package br_ueg_trindade.lucas_web2_ueg_fullstack.service;
 
-import br_ueg_trindade.lucas_web2_ueg_fullstack.model.Usuario;
-import br_ueg_trindade.lucas_web2_ueg_fullstack.repository.UsuarioRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+
+import br_ueg_trindade.lucas_web2_ueg_fullstack.model.Usuario;
+import br_ueg_trindade.lucas_web2_ueg_fullstack.repository.UsuarioRepository;
 
 @Service
 public class UsuarioService {
@@ -18,7 +20,7 @@ public class UsuarioService {
 
     public Usuario buscarPorId(Long id) {
         return usuarioRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com id: " + id));
+                .orElseThrow(() -> new RuntimeException("Usuário não encontrado com ID: " + id));
     }
 
     public Usuario criar(Usuario usuario) {
@@ -30,10 +32,14 @@ public class UsuarioService {
         usuario.setNome(dadosNovos.getNome());
         usuario.setUsername(dadosNovos.getUsername());
         usuario.setEmail(dadosNovos.getEmail());
+        if (dadosNovos.getSenha() != null && !dadosNovos.getSenha().isBlank()) {
+            usuario.setSenha(dadosNovos.getSenha());
+        }
         return usuarioRepository.save(usuario);
     }
 
     public void excluir(Long id) {
-        usuarioRepository.deleteById(id);
+        Usuario usuario = buscarPorId(id);
+        usuarioRepository.delete(usuario);
     }
 }
