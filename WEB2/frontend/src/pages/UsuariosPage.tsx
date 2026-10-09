@@ -16,7 +16,7 @@ export default function UsuariosPage() {
   }, []);
 
   async function excluir(id: number) {
-    await api.delete(`/api/usuarios/${id}`);
+    await api.delete(`/usuarios/${id}`);
     carregarUsuarios();
   }
 

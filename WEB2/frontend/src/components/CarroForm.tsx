@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState, useEffect } from "react";
 import api from "../services/api";
 import type { Carro } from "../types/Carro";
 
@@ -14,15 +14,33 @@ export default function CarroForm({ onCarroSalvo, carroEditando, onCancelar }: C
   const [ano, setAno] = useState(carroEditando?.ano ? String(carroEditando.ano) : "");
   const [placa, setPlaca] = useState(carroEditando?.placa ?? "");
 
+  // Atualiza os campos caso o carro em edição mude externamente
+  useEffect(() => {
+    setMarca(carroEditando?.marca ?? "");
+    setModelo(carroEditando?.modelo ?? "");
+    setAno(carroEditando?.ano ? String(carroEditando.ano) : "");
+    setPlaca(carroEditando?.placa ?? "");
+  }, [carroEditando]);
+
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
     const dados = { marca, modelo, ano: Number(ano), placa };
-    if (carroEditando) {
-      await api.put(`/carros/${carroEditando.id}`, dados);
-    } else {
-      await api.post("/carros", dados);
+
+    try {
+      if (carroEditando) {
+        await api.put(`/carros/${carroEditando.id}`, dados);
+      } else {
+        await api.post("/carros", dados);
+        // Limpa os campos após cadastrar
+        setMarca("");
+        setModelo("");
+        setAno("");
+        setPlaca("");
+      }
+      onCarroSalvo();
+    } catch (error) {
+      alert("Não foi possível salvar o veículo! Verifique se a placa já está cadastrada.");
     }
-    onCarroSalvo();
   }
 
   return (

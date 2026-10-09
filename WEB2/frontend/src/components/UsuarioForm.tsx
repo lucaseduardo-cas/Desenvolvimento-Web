@@ -1,4 +1,4 @@
-import { FormEvent, useState } from "react";
+import { type FormEvent, useState, useEffect } from "react";
 import api from "../services/api";
 import type { Usuario } from "../types/Usuario";
 
@@ -22,9 +22,9 @@ export default function UsuarioForm({ onUsuarioSalvo, usuarioEditando, onCancela
     }
 
     if (usuarioEditando) {
-      await api.put(`/api/usuarios/${usuarioEditando.id}`, dados);
+      await api.put(`/usuarios/${usuarioEditando.id}`, dados);
     } else {
-      await api.post("/api/usuarios", dados);
+      await api.post("/usuarios", dados);
     }
     setSenha("");
     onUsuarioSalvo();
