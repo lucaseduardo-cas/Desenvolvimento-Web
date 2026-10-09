@@ -8,7 +8,7 @@ export default function UsuariosPage() {
   const [editando, setEditando] = useState<Usuario | null>(null);
 
   function carregarUsuarios() {
-    api.get<Usuario[]>("/api/usuarios").then((res) => setUsuarios(res.data));
+    api.get<Usuario[]>("/usuarios").then((res) => setUsuarios(res.data));
   }
 
   useEffect(() => {
