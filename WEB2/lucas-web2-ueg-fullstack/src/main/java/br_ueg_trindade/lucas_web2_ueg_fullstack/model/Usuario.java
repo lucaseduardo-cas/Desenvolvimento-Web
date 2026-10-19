@@ -1,10 +1,10 @@
 package br_ueg_trindade.lucas_web2_ueg_fullstack.model;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Usuario {
@@ -14,11 +14,18 @@ public class Usuario {
     private Long id;
     private String nome;
     private String username;
+
+    @JsonIgnore
+    private String senha;
     private String email;
 
-    // Permite receber a senha no cadastro (write-only), mas oculta nos retornos JSON (GET)
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    private String senha;
+    @ManyToMany
+    @JoinTable(
+        name = "usuario_permissao",
+        joinColumns = @JoinColumn(name = "usuario_id"),
+        inverseJoinColumns = @JoinColumn(name = "permissao_id")
+    )
+    private Set<Permissao> permissoes = new HashSet<>();
 
     public Usuario() {}
 
@@ -29,6 +36,7 @@ public class Usuario {
         this.senha = senha;
     }
 
+    // Getters e Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
 
@@ -38,9 +46,12 @@ public class Usuario {
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
+    public String getSenha() { return senha; }
+    public void setSenha(String senha) { this.senha = senha; }
+
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getSenha() { return senha; }
-    public void setSenha(String senha) { this.senha = senha; }
+    public Set<Permissao> getPermissoes() { return permissoes; }
+    public void setPermissoes(Set<Permissao> permissoes) { this.permissoes = permissoes; }
 }
