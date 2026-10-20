@@ -1,4 +1,5 @@
 import { type FormEvent, useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import type { Usuario } from "../types/Usuario";
 
@@ -13,6 +14,7 @@ export default function UsuarioForm({ onUsuarioSalvo, usuarioEditando, onCancela
   const [username, setUsername] = useState(usuarioEditando?.username ?? "");
   const [email, setEmail] = useState(usuarioEditando?.email ?? "");
   const [senha, setSenha] = useState("");
+  const navigate = useNavigate();
 
   async function handleSubmit(event: FormEvent) {
     event.preventDefault();
@@ -28,6 +30,7 @@ export default function UsuarioForm({ onUsuarioSalvo, usuarioEditando, onCancela
     }
     setSenha("");
     onUsuarioSalvo();
+    navigate("/usuarios");
   }
 
   return (

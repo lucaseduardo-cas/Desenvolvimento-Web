@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import api from "../services/api";
 import type { Usuario } from "../types/Usuario";
@@ -35,7 +36,11 @@ export default function UsuariosPage() {
       <ul>
         {usuarios.map((u) => (
           <li key={u.id} style={{ marginBottom: "6px" }}>
-            <strong>{u.nome}</strong> ({u.username}) – {u.email}{" "}
+            {/* Link para a rota dinâmica de detalhes */}
+            <Link to={`/usuarios/${u.id}`} style={{ marginRight: "8px", textDecoration: "none" }}>
+              <strong>{u.nome}</strong> ({u.username})
+            </Link>
+            – {u.email}{" "}
             <button onClick={() => setEditando(u)}>Editar</button>{" "}
             <button onClick={() => excluir(u.id)}>Excluir</button>
           </li>
