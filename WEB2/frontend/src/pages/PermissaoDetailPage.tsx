@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import type { Permissao } from "../types/Permissao";
+import Botao from "../components/Botao";
 
 export default function PermissaoDetailPage() {
   const { id } = useParams();
@@ -24,25 +25,23 @@ export default function PermissaoDetailPage() {
   }, [id]);
 
   if (carregando) {
-    return <p>Carregando detalhes...</p>;
+    return <p className="text-gray-600">Carregando detalhes...</p>;
   }
 
   if (!permissao) {
     return (
-      <div>
-        <p>Permissão não encontrada.</p>
-        <button onClick={() => navigate("/permissoes")}>Voltar</button>
+      <div className="max-w-md rounded-lg bg-white p-6 shadow">
+        <p className="mb-4 text-gray-700">Permissão não encontrada.</p>
+        <Botao variante="neutro" onClick={() => navigate("/permissoes")}>Voltar</Botao>
       </div>
     );
   }
 
   return (
-    <div>
-      <h1>{permissao.nome}</h1>
-      <p><strong>Descrição:</strong> {permissao.descricao}</p>
-      <button onClick={() => navigate("/permissoes")} style={{ marginTop: "12px" }}>
-        Voltar
-      </button>
+    <div className="max-w-md rounded-lg bg-white p-6 shadow">
+      <h1 className="mb-4 text-2xl font-bold text-gray-800">{permissao.nome}</h1>
+      <p className="mb-4 text-gray-700"><strong>Descrição:</strong> {permissao.descricao}</p>
+      <Botao variante="neutro" onClick={() => navigate("/permissoes")}>Voltar</Botao>
     </div>
   );
 }

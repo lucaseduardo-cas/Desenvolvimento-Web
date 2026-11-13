@@ -6,6 +6,7 @@ import UsuarioDetailPage from "./pages/UsuarioDetailPage";
 import UsuarioPermissoesPage from "./pages/UsuarioPermissoesPage";
 import PermissoesPage from "./pages/PermissoesPage";
 import PermissaoDetailPage from "./pages/PermissaoDetailPage";
+import CarrosPage from "./pages/CarrosPage";
 
 export default function App() {
   return (
@@ -17,7 +18,11 @@ export default function App() {
         <Route path="/permissoes" element={<PermissoesPage />} />
         <Route path="/permissoes/:id" element={<PermissaoDetailPage />} />
         <Route path="/atribuir-permissoes" element={<UsuarioPermissoesPage />} />
-        <Route path="*" element={<h1>404 - Página não encontrada</h1>} />
+        <Route path="/carros" element={<CarrosPage />} />
+        <Route
+          path="*"
+          element={<h1 className="text-2xl font-bold text-gray-800">404 - Página não encontrada</h1>}
+        />
       </Route>
     </Routes>
   );

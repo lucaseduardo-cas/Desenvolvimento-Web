@@ -1,7 +1,11 @@
-import { type FormEvent, useState, useEffect } from "react";
+import { type FormEvent, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import api from "../services/api";
 import type { Usuario } from "../types/Usuario";
+import Botao from "./Botao";
+
+const campo =
+  "rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none";
 
 interface UsuarioFormProps {
   onUsuarioSalvo: () => void;
@@ -34,19 +38,31 @@ export default function UsuarioForm({ onUsuarioSalvo, usuarioEditando, onCancela
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: "15px", display: "flex", gap: "8px" }}>
-      <input value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome" required />
-      <input value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" required />
-      <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-mail" type="email" required />
+    <form
+      onSubmit={handleSubmit}
+      className="mb-6 grid gap-3 rounded-lg bg-white p-4 shadow md:grid-cols-5"
+    >
+      <input className={campo} value={nome} onChange={(e) => setNome(e.target.value)} placeholder="Nome" required />
+      <input className={campo} value={username} onChange={(e) => setUsername(e.target.value)} placeholder="Username" required />
+      <input className={campo} value={email} onChange={(e) => setEmail(e.target.value)} placeholder="E-mail" type="email" required />
       <input
+        className={campo}
         value={senha}
         onChange={(e) => setSenha(e.target.value)}
         placeholder={usuarioEditando ? "Nova senha (opcional)" : "Senha"}
         type="password"
         required={!usuarioEditando}
       />
-      <button type="submit">{usuarioEditando ? "Salvar" : "Cadastrar"}</button>
-      {usuarioEditando && <button type="button" onClick={onCancelar}>Cancelar</button>}
+      <div className="flex gap-2">
+        <Botao type="submit" className="flex-1">
+          {usuarioEditando ? "Salvar alterações" : "Cadastrar"}
+        </Botao>
+        {usuarioEditando && (
+          <Botao type="button" variante="neutro" onClick={onCancelar}>
+            Cancelar
+          </Botao>
+        )}
+      </div>
     </form>
   );
 }

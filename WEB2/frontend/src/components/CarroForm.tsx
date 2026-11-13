@@ -1,6 +1,10 @@
 import { type FormEvent, useState, useEffect } from "react";
 import api from "../services/api";
 import type { Carro } from "../types/Carro";
+import Botao from "./Botao";
+
+const campo =
+  "rounded-md border border-gray-300 px-3 py-2 focus:border-blue-500 focus:outline-none";
 
 interface CarroFormProps {
   onCarroSalvo: () => void;
@@ -44,13 +48,24 @@ export default function CarroForm({ onCarroSalvo, carroEditando, onCancelar }: C
   }
 
   return (
-    <form onSubmit={handleSubmit} style={{ marginBottom: "15px", display: "flex", gap: "8px" }}>
-      <input value={marca} onChange={(e) => setMarca(e.target.value)} placeholder="Marca" required />
-      <input value={modelo} onChange={(e) => setModelo(e.target.value)} placeholder="Modelo" required />
-      <input type="number" value={ano} onChange={(e) => setAno(e.target.value)} placeholder="Ano" required />
-      <input value={placa} onChange={(e) => setPlaca(e.target.value)} placeholder="Placa" required />
-      <button type="submit">{carroEditando ? "Salvar" : "Cadastrar"}</button>
-      {carroEditando && <button type="button" onClick={onCancelar}>Cancelar</button>}
+    <form
+      onSubmit={handleSubmit}
+      className="mb-6 grid gap-3 rounded-lg bg-white p-4 shadow md:grid-cols-5"
+    >
+      <input className={campo} value={marca} onChange={(e) => setMarca(e.target.value)} placeholder="Marca" required />
+      <input className={campo} value={modelo} onChange={(e) => setModelo(e.target.value)} placeholder="Modelo" required />
+      <input className={campo} type="number" value={ano} onChange={(e) => setAno(e.target.value)} placeholder="Ano" required />
+      <input className={campo} value={placa} onChange={(e) => setPlaca(e.target.value)} placeholder="Placa" required />
+      <div className="flex gap-2">
+        <Botao type="submit" className="flex-1">
+          {carroEditando ? "Salvar alterações" : "Cadastrar"}
+        </Botao>
+        {carroEditando && (
+          <Botao type="button" variante="neutro" onClick={onCancelar}>
+            Cancelar
+          </Botao>
+        )}
+      </div>
     </form>
   );
 }
