@@ -5,6 +5,7 @@ import br_ueg_trindade.lucas_web2_ueg_fullstack.model.Usuario;
 import br_ueg_trindade.lucas_web2_ueg_fullstack.repository.PermissaoRepository;
 import br_ueg_trindade.lucas_web2_ueg_fullstack.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,6 +22,9 @@ public class UsuarioService {
     @Autowired
     private PermissaoRepository permissaoRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     public List<Usuario> listarTodos() {
         return usuarioRepository.findAll();
     }
@@ -31,6 +35,7 @@ public class UsuarioService {
     }
 
     public Usuario salvar(Usuario usuario) {
+        criptografarSenha(usuario);
         return usuarioRepository.save(usuario);
     }
 
@@ -47,7 +52,14 @@ public class UsuarioService {
     }
 
     public Usuario criar(Usuario usuario) {
+        criptografarSenha(usuario);
         return usuarioRepository.save(usuario);
+    }
+
+    private void criptografarSenha(Usuario usuario) {
+        if (usuario.getSenha() != null && !usuario.getSenha().isBlank()) {
+            usuario.setSenha(passwordEncoder.encode(usuario.getSenha()));
+        }
     }
 
     public Usuario atualizar(Long id, Usuario dadosAtualizados) {
@@ -56,7 +68,7 @@ public class UsuarioService {
         usuario.setUsername(dadosAtualizados.getUsername());
         usuario.setEmail(dadosAtualizados.getEmail());
         if (dadosAtualizados.getSenha() != null && !dadosAtualizados.getSenha().isBlank()) {
-            usuario.setSenha(dadosAtualizados.getSenha());
+            usuario.setSenha(passwordEncoder.encode(dadosAtualizados.getSenha()));
         }
         return usuarioRepository.save(usuario);
     }

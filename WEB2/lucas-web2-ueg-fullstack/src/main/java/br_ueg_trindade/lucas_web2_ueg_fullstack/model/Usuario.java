@@ -1,6 +1,6 @@
 package br_ueg_trindade.lucas_web2_ueg_fullstack.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import java.util.HashSet;
@@ -15,7 +15,7 @@ public class Usuario {
     private String nome;
     private String username;
 
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String senha;
     private String email;
 
