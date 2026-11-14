@@ -19,36 +19,24 @@ public class TesteMarca {
 
         PMarca persistencia = new PMarca();
 
-<<<<<<< HEAD
-        //Marca marca = persistencia.consultar(1);
+        // Lista todas as marcas cadastradas
         List<Marca> lista = persistencia.listar();
-
         for (Marca marca : lista) {
             System.out.println("Codigo: " + marca.getCodigo());
             System.out.println("Nome: " + marca.getNome());
         }
 
-=======
-        Marca marca = new Marca();
-        marca.setCodigo(15);
-        marca.setNome("MARCA ALTERADA COM SUCESSO.");
-
-        try {
-            //persistencia.incluir(marca);
-            //persistencia.alterar(marca);
-            persistencia.excluir(marca);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-//        Marca marca = persistencia.consultar(1);
-//        List<Marca> lista = persistencia.listar();
-//        for (Marca marca : lista) {
-//            System.out.println("Codigo: " + marca.getCodigo());
-//            System.out.println("Nome: " + marca.getNome());
+        // Exemplos de inclusão/alteração/exclusão (descomente para testar):
+//        Marca marca = new Marca();
+//        marca.setCodigo(15);
+//        marca.setNome("MARCA ALTERADA COM SUCESSO.");
+//        try {
+//            persistencia.incluir(marca);
+//            persistencia.alterar(marca);
+//            persistencia.excluir(marca);
+//        } catch (Exception e) {
+//            e.printStackTrace();
 //        }
->>>>>>> backup-versao-base
     }
 
 }

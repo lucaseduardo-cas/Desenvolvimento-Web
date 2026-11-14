@@ -25,11 +25,7 @@ public class Conexao {
                 
                 Class.forName("org.postgresql.Driver");// Para quem for usar Postgres
                 
-<<<<<<< HEAD
                 connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bdueg202601",user, password);
-=======
-                connection = DriverManager.getConnection("jdbc:postgresql://localhost:5432/bdueg202601_prof",user, password);
->>>>>>> backup-versao-base
                 
             } catch (ClassNotFoundException e) {
                 e.printStackTrace();
@@ -37,11 +33,8 @@ public class Conexao {
                 e.printStackTrace();
             }
             
-<<<<<<< HEAD
-=======
             //se deu tudo certo, cria a conexão e devolve para quem 
             //solicitou
->>>>>>> backup-versao-base
             return connection;
         }
 
