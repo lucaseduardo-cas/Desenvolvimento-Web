@@ -2,7 +2,6 @@ package com.br.controller;
 
 import com.br.model.Veiculo;
 import com.br.repository.VeiculoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,8 +11,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class VeiculoController {
 
-    @Autowired
-    private VeiculoRepository veiculoRepository;
+    private final VeiculoRepository veiculoRepository;
+
+    public VeiculoController(VeiculoRepository veiculoRepository) {
+        this.veiculoRepository = veiculoRepository;
+    }
 
     @GetMapping
     public List<Veiculo> listarTodos() {

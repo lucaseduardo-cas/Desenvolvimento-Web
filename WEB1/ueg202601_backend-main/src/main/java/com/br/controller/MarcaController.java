@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,8 +26,11 @@ import com.br.repository.MarcaRepository;
 public class MarcaController {
 
 	// Cria o repositório JPA de forma automática e autogerenciado
-	@Autowired
-	private MarcaRepository mrep;
+	private final MarcaRepository mrep;
+
+	public MarcaController(MarcaRepository mrep) {
+		this.mrep = mrep;
+	}
 
 	// Método listar - trazer todas as marcas do banco
 	@GetMapping("/marca")

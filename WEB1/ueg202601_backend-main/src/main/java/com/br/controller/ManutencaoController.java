@@ -2,7 +2,6 @@ package com.br.controller;
 
 import com.br.model.Manutencao;
 import com.br.repository.ManutencaoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -11,8 +10,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class ManutencaoController {
 
-    @Autowired
-    private ManutencaoRepository manutencaoRepository;
+    private final ManutencaoRepository manutencaoRepository;
+
+    public ManutencaoController(ManutencaoRepository manutencaoRepository) {
+        this.manutencaoRepository = manutencaoRepository;
+    }
 
     @GetMapping
     public List<Manutencao> listarTodas() {

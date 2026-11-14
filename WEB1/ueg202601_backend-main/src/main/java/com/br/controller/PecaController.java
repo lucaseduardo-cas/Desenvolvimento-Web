@@ -2,7 +2,6 @@ package com.br.controller;
 
 import com.br.model.Peca;
 import com.br.repository.PecaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -11,8 +10,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class PecaController {
 
-    @Autowired
-    private PecaRepository pecaRepository;
+    private final PecaRepository pecaRepository;
+
+    public PecaController(PecaRepository pecaRepository) {
+        this.pecaRepository = pecaRepository;
+    }
 
     @GetMapping
     public List<Peca> listarTodas() {

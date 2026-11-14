@@ -2,7 +2,6 @@ package com.br.controller;
 
 import com.br.model.OrdemServico;
 import com.br.repository.OrdemServicoRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -11,8 +10,11 @@ import java.util.List;
 @CrossOrigin(origins = "*")
 public class OrdemServicoController {
 
-    @Autowired
-    private OrdemServicoRepository osRepository;
+    private final OrdemServicoRepository osRepository;
+
+    public OrdemServicoController(OrdemServicoRepository osRepository) {
+        this.osRepository = osRepository;
+    }
 
     @GetMapping
     public List<OrdemServico> listarTodas() {
